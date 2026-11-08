@@ -1806,3 +1806,179 @@ html[data-vt="kit-left"]::view-transition-new(root) { animation: kit-slide-left 
 @media (max-width: 640px) {
   .request-arrow { width: 30px; height: 30px; }
 }
+
+/* RB Leipzig Away Kit Theme */
+html[data-club="leipzig"][data-kit="away"] body {
+  background: #681020;
+}
+
+html[data-club="leipzig"][data-kit="away"] .setup-body,
+html[data-club="leipzig"][data-kit="away"] .roster-item,
+html[data-club="leipzig"][data-kit="away"] .pick-card,
+html[data-club="leipzig"][data-kit="away"] .pick-info {
+  background: #26334A;
+}
+
+html[data-club="leipzig"][data-kit="away"] .pick-media,
+html[data-club="leipzig"][data-kit="away"] .avatar {
+  background: #E5B83D;
+}
+
+html[data-club="leipzig"][data-kit="away"] .avatar-fallback {
+  color: #26334A;
+}
+
+html[data-club="leipzig"][data-kit="away"] .pick-name,
+html[data-club="leipzig"][data-kit="away"] .roster-name,
+html[data-club="leipzig"][data-kit="away"] h1,
+html[data-club="leipzig"][data-kit="away"] .battle-q {
+  color: #FFFFFF;
+}
+
+html[data-club="leipzig"][data-kit="away"] .roster-pos,
+html[data-club="leipzig"][data-kit="away"] .pick-pos {
+  color: #E5B83D;
+}
+
+html[data-club="leipzig"][data-kit="away"] .pick-meta,
+html[data-club="leipzig"][data-kit="away"] .pick-key,
+html[data-club="leipzig"][data-kit="away"] .setup-label,
+html[data-club="leipzig"][data-kit="away"] .setup-estimate,
+html[data-club="leipzig"][data-kit="away"] .battle-count,
+html[data-club="leipzig"][data-kit="away"] .battle-pct,
+html[data-club="leipzig"][data-kit="away"] .eyebrow,
+html[data-club="leipzig"][data-kit="away"] .hint {
+  color: #F0D698;
+}
+
+html[data-club="leipzig"][data-kit="away"] .btn-primary {
+  background: #E5B83D;
+  border-color: #E5B83D;
+  color: #26334A;
+}
+
+html[data-club="leipzig"][data-kit="away"] .vs,
+html[data-club="leipzig"][data-kit="away"] .btn-tie {
+  background: #E50046;
+  color: #FFFFFF;
+}
+
+html[data-club="leipzig"][data-kit="away"] .progress span {
+  background: #E5B83D;
+}
+
+html[data-club="leipzig"][data-kit="away"] .chip span {
+  border-color: #E5B83D;
+  color: #E5B83D;
+}
+
+html[data-club="leipzig"][data-kit="away"] .chip input:checked + span {
+  background: #E5B83D;
+  color: #26334A;
+}
+
+html[data-club="leipzig"][data-kit="away"] .chip input:focus-visible + span {
+  outline-color: #E5B83D;
+}
+
+html[data-club="leipzig"][data-kit="away"] .seg-pill {
+  background: #E5B83D;
+}
+
+html[data-club="leipzig"][data-kit="away"] .seg-opt input:checked + span {
+  color: #26334A;
+}
+
+html[data-club="leipzig"][data-kit="away"] .seg:not(.has-pill) .seg-opt input:checked + span {
+  background: #E5B83D;
+}
+
+html[data-club="leipzig"][data-kit="away"] .seg-opt input:focus-visible + span {
+  outline-color: #E5B83D;
+}
+
+/* RB Leipzig Third Kit Theme */
+html[data-club="leipzig"][data-kit="third"] body {
+  background: #101C38;
+}
+
+html[data-club="leipzig"][data-kit="third"] .setup-body,
+html[data-club="leipzig"][data-kit="third"] .roster-item,
+html[data-club="leipzig"][data-kit="third"] .pick-card,
+html[data-club="leipzig"][data-kit="third"] .pick-info {
+  background: #243D68;
+}
+
+html[data-club="leipzig"][data-kit="third"] .pick-media,
+html[data-club="leipzig"][data-kit="third"] .avatar {
+  background: #315D85;
+}
+
+html[data-club="leipzig"][data-kit="third"] .pick-name,
+html[data-club="leipzig"][data-kit="third"] .roster-name,
+html[data-club="leipzig"][data-kit="third"] h1,
+html[data-club="leipzig"][data-kit="third"] .battle-q {
+  color: #FFFFFF;
+}
+
+html[data-club="leipzig"][data-kit="third"] .roster-pos,
+html[data-club="leipzig"][data-kit="third"] .pick-pos {
+  color: #9EC5E8;
+}
+
+html[data-club="leipzig"][data-kit="third"] .pick-meta,
+html[data-club="leipzig"][data-kit="third"] .pick-key,
+html[data-club="leipzig"][data-kit="third"] .setup-label,
+html[data-club="leipzig"][data-kit="third"] .setup-estimate,
+html[data-club="leipzig"][data-kit="third"] .battle-count,
+html[data-club="leipzig"][data-kit="third"] .battle-pct,
+html[data-club="leipzig"][data-kit="third"] .eyebrow,
+html[data-club="leipzig"][data-kit="third"] .hint {
+  color: #D4E2F0;
+}
+
+html[data-club="leipzig"][data-kit="third"] .btn-primary {
+  background: #E50046;
+  border-color: #E50046;
+  color: #FFFFFF;
+}
+
+html[data-club="leipzig"][data-kit="third"] .vs,
+html[data-club="leipzig"][data-kit="third"] .btn-tie {
+  background: #E50046;
+  color: #FFFFFF;
+}
+
+html[data-club="leipzig"][data-kit="third"] .progress span {
+  background: #9EC5E8;
+}
+
+html[data-club="leipzig"][data-kit="third"] .chip span {
+  border-color: #9EC5E8;
+  color: #9EC5E8;
+}
+
+html[data-club="leipzig"][data-kit="third"] .chip input:checked + span {
+  background: #9EC5E8;
+  color: #101C38;
+}
+
+html[data-club="leipzig"][data-kit="third"] .chip input:focus-visible + span {
+  outline-color: #9EC5E8;
+}
+
+html[data-club="leipzig"][data-kit="third"] .seg-pill {
+  background: #9EC5E8;
+}
+
+html[data-club="leipzig"][data-kit="third"] .seg-opt input:checked + span {
+  color: #101C38;
+}
+
+html[data-club="leipzig"][data-kit="third"] .seg:not(.has-pill) .seg-opt input:checked + span {
+  background: #9EC5E8;
+}
+
+html[data-club="leipzig"][data-kit="third"] .seg-opt input:focus-visible + span {
+  outline-color: #9EC5E8;
+}
