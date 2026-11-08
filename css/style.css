@@ -1671,3 +1671,115 @@ html[data-vt="kit-left"]::view-transition-new(root) { animation: kit-slide-left 
   .st-body.st-in, .st-skeleton span { animation: none; }
   .st-bar i { transition: none; }
 }
+
+/* Eintracht Frankfurt Away Kit Theme */
+html[data-club="frankfurt"][data-kit="away"] body {
+  background: #252A30;
+}
+
+html[data-club="frankfurt"][data-kit="away"] .setup-body,
+html[data-club="frankfurt"][data-kit="away"] .roster-item,
+html[data-club="frankfurt"][data-kit="away"] .pick-card,
+html[data-club="frankfurt"][data-kit="away"] .pick-info {
+  background: #C5C9CA;
+}
+
+html[data-club="frankfurt"][data-kit="away"] .pick-media,
+html[data-club="frankfurt"][data-kit="away"] .avatar {
+  background: #E8E8E5;
+}
+
+html[data-club="frankfurt"][data-kit="away"] .avatar-fallback {
+  color: #121318;
+}
+
+html[data-club="frankfurt"][data-kit="away"] .pick-name,
+html[data-club="frankfurt"][data-kit="away"] .roster-name {
+  color: #121318;
+}
+
+html[data-club="frankfurt"][data-kit="away"] .roster-pos,
+html[data-club="frankfurt"][data-kit="away"] .pick-pos {
+  color: #E1020C;
+}
+
+html[data-club="frankfurt"][data-kit="away"] .pick-meta,
+html[data-club="frankfurt"][data-kit="away"] .pick-key {
+  color: #3D454D;
+}
+
+html[data-club="frankfurt"][data-kit="away"] h1,
+html[data-club="frankfurt"][data-kit="away"] .battle-q {
+  color: #FFFFFF;
+}
+
+html[data-club="frankfurt"][data-kit="away"] .eyebrow,
+html[data-club="frankfurt"][data-kit="away"] .hint,
+html[data-club="frankfurt"][data-kit="away"] .setup-label,
+html[data-club="frankfurt"][data-kit="away"] .setup-estimate,
+html[data-club="frankfurt"][data-kit="away"] .battle-count,
+html[data-club="frankfurt"][data-kit="away"] .battle-pct {
+  color: #C5C9CA;
+}
+
+html[data-club="frankfurt"][data-kit="away"] .btn-primary {
+  background: #E1020C;
+  border-color: #E1020C;
+  color: #FFFFFF;
+}
+
+/* Eintracht Frankfurt Third Kit Theme */
+html[data-club="frankfurt"][data-kit="third"] body {
+  background: #526779;
+}
+
+html[data-club="frankfurt"][data-kit="third"] .setup-body,
+html[data-club="frankfurt"][data-kit="third"] .roster-item,
+html[data-club="frankfurt"][data-kit="third"] .pick-card,
+html[data-club="frankfurt"][data-kit="third"] .pick-info {
+  background: #344B60;
+}
+
+html[data-club="frankfurt"][data-kit="third"] .pick-media,
+html[data-club="frankfurt"][data-kit="third"] .avatar {
+  background: #8299AA;
+}
+
+html[data-club="frankfurt"][data-kit="third"] .avatar-fallback {
+  color: #FFFFFF;
+}
+
+html[data-club="frankfurt"][data-kit="third"] .pick-name,
+html[data-club="frankfurt"][data-kit="third"] .roster-name {
+  color: #FFFFFF;
+}
+
+html[data-club="frankfurt"][data-kit="third"] .roster-pos,
+html[data-club="frankfurt"][data-kit="third"] .pick-pos {
+  color: #A9BDCC;
+}
+
+html[data-club="frankfurt"][data-kit="third"] .pick-meta,
+html[data-club="frankfurt"][data-kit="third"] .pick-key {
+  color: #C5D3DE;
+}
+
+html[data-club="frankfurt"][data-kit="third"] h1,
+html[data-club="frankfurt"][data-kit="third"] .battle-q {
+  color: #FFFFFF;
+}
+
+html[data-club="frankfurt"][data-kit="third"] .eyebrow,
+html[data-club="frankfurt"][data-kit="third"] .hint,
+html[data-club="frankfurt"][data-kit="third"] .setup-label,
+html[data-club="frankfurt"][data-kit="third"] .setup-estimate,
+html[data-club="frankfurt"][data-kit="third"] .battle-count,
+html[data-club="frankfurt"][data-kit="third"] .battle-pct {
+  color: #DCE4EB;
+}
+
+html[data-club="frankfurt"][data-kit="third"] .btn-primary {
+  background: #344B60;
+  border-color: #8299AA;
+  color: #FFFFFF;
+}
