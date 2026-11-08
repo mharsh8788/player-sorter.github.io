@@ -120,6 +120,8 @@
 
   const TIP = [[0.24, 0.3], [0.33, 0.39]];
 
+  const FADE = [0.4, 0.62];
+
   const SLEEVE_L = [[0, 0], [30, 0], [22, 46], [0, 60]];
 
   const ZZ_ROWS = [0.3, 0.46, 0.62, 0.78];
@@ -177,12 +179,33 @@
       '<rect width="100%" height="100%" fill="url(#t)" mask="url(#m)" opacity="' + opacity + '"/></svg>';
   }
 
+  // Halftone dots on a 200x100 grid: small and sparse at the bottom-left, large and dense
+  // toward the top-right (Orlando City's "digital storm" body pattern).
+  const DOTS = (function () {
+    const out = [];
+    for (let row = 0, y = 4; y < 100; row++, y = 4 + row * 7) {
+      for (let x = 4 + (row % 2 ? 4 : 0); x < 200; x += 8) {
+        const t = Math.max(0, Math.min(1, 0.55 * (x / 200) + 0.45 * (1 - y / 100)));
+        out.push([x, y, 0.5 + 3.2 * Math.pow(t, 1.15)]);
+      }
+    }
+    return out;
+  })();
+
+  function dotsSvg(c) {
+    const circles = DOTS.map(d => '<circle cx="' + d[0] + '" cy="' + d[1] + '" r="' + d[2].toFixed(2) + '"/>').join("");
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" preserveAspectRatio="xMidYMid slice"><g fill="' + c + '">' + circles + "</g></svg>";
+  }
+
   function pct(n) {
     return (n * 100).toFixed(2) + "%";
   }
 
   function css(p) {
     const b = p.bands || [];
+    if (p.type === "dots") {
+      return "url('data:image/svg+xml," + encodeURIComponent(dotsSvg(b[0] || "#FFFFFF")) + "') center / cover no-repeat, " + p.base;
+    }
     if (p.type === "stripes") {
       return "repeating-linear-gradient(90deg, " + p.base + " 0 18%, " + b[0] + " 18% 30%)";
     }
@@ -194,6 +217,10 @@
     }
     if (p.type === "gradient") {
       return "linear-gradient(180deg, " + p.base + ", " + (b[0] || p.base) + ")";
+    }
+    if (p.type === "fade") {
+      // left half base colour, softly blending into the band colour on the right (Cagliari)
+      return "linear-gradient(90deg, " + p.base + " 0 " + pct(FADE[0]) + ", " + (b[0] || p.base) + " " + pct(FADE[1]) + " 100%)";
     }
     if (p.type === "sleeves") {
       const c = b[0] || "#FFFFFF";
@@ -401,6 +428,21 @@
       });
       ctx.closePath();
       ctx.fill();
+    } else if (p.type === "dots") {
+      const s = Math.max(w / 200, h / 100);
+      const ox = x + (w - 200 * s) / 2;
+      const oy = y + (h - 100 * s) / 2;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(x, y, w, h);
+      ctx.clip();
+      ctx.fillStyle = b[0] || "#FFFFFF";
+      DOTS.forEach(d => {
+        ctx.beginPath();
+        ctx.arc(ox + d[0] * s, oy + d[1] * s, d[2] * s, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.restore();
     } else if (p.type === "triangles") {
       const c = b[0] || "#FFFFFF";
       const off = document.createElement("canvas");
@@ -472,6 +514,12 @@
         ctx.fillStyle = c[i % c.length];
         ctx.fillRect(x, y + h * from, w, h * (to - from));
       });
+    } else if (p.type === "fade") {
+      const g = ctx.createLinearGradient(x, y, x + w, y);
+      g.addColorStop(FADE[0], p.base);
+      g.addColorStop(FADE[1], b[0] || p.base);
+      ctx.fillStyle = g;
+      ctx.fillRect(x, y, w, h);
     } else if (p.type === "gradient") {
       const g = ctx.createLinearGradient(x, y, x, y + h);
       g.addColorStop(0, p.base);
@@ -532,5 +580,5 @@
     return !!c && (0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]) / 255 > 0.85;
   }
 
-  window.Kits = { ids, get, css, draw, mix, isLight };
+  window.Kits = { ids, get, css, draw, mix, isLight, dots: DOTS };
 })();

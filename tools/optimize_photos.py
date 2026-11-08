@@ -7,11 +7,17 @@ from pathlib import Path
 
 from PIL import Image
 
+try:
+    import pillow_jxl
+except ImportError:
+    pass
+
 PHOTO_MAX = 512
 CREST_MAX = 256
 PHOTO_QUALITY = 82
 WEBP_METHOD = 4
-SOURCE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".avif"}
+SOURCE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".avif", ".jxl"}
+JXL_OK = ".jxl" in Image.registered_extensions()
 
 
 def shrink(img, limit):
@@ -128,13 +134,20 @@ def main(root):
         except OSError:
             pass
     todo = []
+    no_jxl = []
     for path in sorted(root.rglob("*")):
         if not path.is_file() or path.suffix.lower() not in SOURCE_EXTS or ".tmp." in path.name:
+            continue
+        if path.suffix.lower() == ".jxl" and not JXL_OK:
+            no_jxl.append(path)
             continue
         if path.parent.name == "players" and not photo_done(path):
             todo.append((path, optimize_photo, photo_reason(path)))
         elif path.stem.lower().startswith("crest") and path.parent.name != "players" and not crest_done(path):
             todo.append((path, optimize_crest, crest_reason(path)))
+    if no_jxl:
+        print(f"Skipped {len(no_jxl)} .jxl photo(s) because JPEG XL support isn't installed.")
+        print("Run: pip install pillow-jxl-plugin   then run this again.")
     if not todo:
         print("Everything is already optimised.")
         return

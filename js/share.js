@@ -158,7 +158,7 @@
     const from = Math.max(clearX || 0, 0);
     const room = f.w - from;
     ctx.save();
-    if (["zigzag", "hoops", "split", "sash", "diamonds", "lightning", "checks", "triangles", "chevron", "sleeves", "centreband", "band", "cross"].indexOf(p.type) >= 0) {
+    if (["zigzag", "hoops", "split", "sash", "diamonds", "lightning", "checks", "triangles", "chevron", "sleeves", "centreband", "band", "cross", "dots"].indexOf(p.type) >= 0) {
       if (room < 150) {
         ctx.restore();
         return;
@@ -352,6 +352,17 @@
       for (let r = 0; r < 4; r++) {
         for (let q = r % 2; q < cols; q += 2) ctx.fillRect(x0 + q * cell, r * cell, cell, cell);
       }
+    } else if (p.type === "dots") {
+      const s = Math.max(room / 200, h / 100);
+      const ox = from + (room - 200 * s) / 2;
+      const oy = (h - 100 * s) / 2;
+      ctx.fillStyle = band;
+      ctx.globalAlpha = 0.85;
+      Kits.dots.forEach(d => {
+        ctx.beginPath();
+        ctx.arc(ox + d[0] * s, oy + d[1] * s, d[2] * s, 0, Math.PI * 2);
+        ctx.fill();
+      });
     } else if (p.type === "triangles") {
       const start = Math.max(f.w * 0.45, from + 12);
       const tw = 36;
@@ -585,7 +596,7 @@
     ctx.textBaseline = "alphabetic";
     if (twoLine) {
       const metaSize = nameSize ? Math.min(Math.max(16, nameSize * 0.62), 32) : Math.min(Math.max(18, h * 0.14), 32);
-      const meta = [entry.positionLabel, entry.player.number != null ? "#" + entry.player.number : ""].filter(Boolean).join(" · ");
+      const meta = entry.metaLine || [entry.positionLabel, entry.player.number != null ? "#" + entry.player.number : ""].filter(Boolean).join(" · ");
       const nameAsc = ctx.measureText(nameText).actualBoundingBoxAscent;
       ctx.font = font(500, metaSize, BODY);
       const mm = ctx.measureText(meta);
@@ -754,7 +765,7 @@
     ctx.fillRect(0, 0, f.w, f.h);
 
     const modeLabel = mode === "top3" ? "Top 3" : mode === "top10" ? "Top 10" : team.squadLabel ? "All " + team.squadLabel : "Full squad";
-    drawHeader(ctx, f, kit, team, crestImg, team.season + " " + (team.squadLabel || "squad") + " · " + modeLabel + (subtitleExtra || ""));
+    drawHeader(ctx, f, kit, team, crestImg, (team.shareLabel || team.season + " " + (team.squadLabel || "squad")) + " · " + modeLabel + (subtitleExtra || ""));
 
     layoutList(ctx, f, shown, imgs, f.head + 36, f.h - f.foot - 28, kit);
 
@@ -842,7 +853,7 @@
     view.setAttribute("role", "dialog");
     view.setAttribute("aria-modal", "true");
     view.innerHTML =
-      '<button type="button" class="save-view-close" aria-label="Close">×</button>' +
+      '<button type="button" class="save-view-close" aria-label="Close"><svg class="x-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>' +
       '<p class="save-view-tip"></p>' +
       (escapeHref
         ? '<p class="save-view-sub save-view-stuck">If press & hold isn\'t working, please open in your browser. Twitter browser is buggy and I can\'t figure out how to fix it. I\'m sorry.</p>'

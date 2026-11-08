@@ -12,13 +12,13 @@ window.SQUAD_MANIFEST = {
           id: "laliga",
           name: "LaLiga",
           country: "Spain",
-          teams: ["atletico-madrid", "barcelona", "real-madrid", "real-betis", "villarreal", "rayo-vallecano", "getafe"]
+          teams: ["atletico-madrid", "barcelona", "real-madrid", "real-betis", "villarreal", "rayo-vallecano", "getafe", "deportivo-a-coruna"]//, "real-sociedad"]
         },
         {
           id: "premier-league",
           name: "Premier League",
           country: "England",
-          teams: ["arsenal", "liverpool", "manchester-city", "manchester-united", "aston-villa", "chelsea", "tottenham", "newcastle", "fulham", "leeds"]
+          teams: ["arsenal", "liverpool", "manchester-city", "manchester-united", "aston-villa", "chelsea", "tottenham", "newcastle", "fulham", "leeds", "everton"]
         },
         {
           id: "bundesliga",
@@ -36,7 +36,7 @@ window.SQUAD_MANIFEST = {
           id: "serie-a",
           name: "Serie A",
           country: "Italy",
-          teams: ["roma", "juventus", "ac-milan", "inter"]
+          teams: ["roma", "juventus", "ac-milan", "inter", "cagliari", "como"]//, "napoli"]
         },
         {
           id: "eredivisie",
@@ -44,12 +44,11 @@ window.SQUAD_MANIFEST = {
           country: "Netherlands",
           teams: ["ajax"]
         },
-        /*
         {
-          id: "championship",
-          name: "Championship",
-          country: "England",
-          teams: ["sheffield-united"]
+          id: "mls",
+          name: "Major League Soccer",
+          country: "United States",
+          teams: ["inter-miami", "orlando-city", "new-england-revolution"]
         },
         {
           id: "liga-profesional",
@@ -62,7 +61,26 @@ window.SQUAD_MANIFEST = {
           name: "Campeonato Brasileiro Série A",
           country: "Brazil",
           teams: ["flamengo"]
-        }
+        },
+        {
+          id: "liga-mx",
+          name: "Liga MX",
+          country: "Mexico",
+          teams: ["club-america"]
+        },
+        {
+          id: "championship",
+          name: "Championship",
+          country: "England",
+          teams: ["west-ham-united", "wolves"]//, "sheffield-united"]
+        },
+        /*
+        {
+          id: "liga-portugal",
+          name: "Liga Portugal",
+          country: "Portugal",
+          teams: ["benfica"]
+        },
           */
       ]
     },
@@ -81,13 +99,19 @@ window.SQUAD_MANIFEST = {
           id: "wsl",
           name: "WSL",
           country: "England",
-          teams: ["arsenal-women", "chelsea-women", "manchester-city-women"]
+          teams: ["arsenal-women", "chelsea-women", "manchester-city-women", "manchester-united-women", "london-city-lionesses"]
         },
         {
           id: "premiere-ligue",
           name: "Première Ligue",
           country: "France",
-          teams: ["ol-lyonnes"]
+          teams: ["ol-lyonnes", "psg-women"]
+        },
+        {
+          id: "frauen-bundesliga",
+          name: "Frauen-Bundesliga",
+          country: "Germany",
+          teams: ["bayern-munich-women"]
         }
       ]
     },
@@ -120,6 +144,13 @@ window.SQUAD_MANIFEST = {
       name: "Specials",
       tab: "Specials",
       groups: [
+        /*
+        {
+          id: "build-your-own",
+          name: "Build your own",
+          builder: true
+        },
+        */
         {
           id: "ballon-dor",
           name: "Ballon d'Or",
