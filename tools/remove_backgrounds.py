@@ -1,5 +1,6 @@
 import argparse
 import shutil
+import time
 import sys
 from pathlib import Path
 
@@ -48,6 +49,28 @@ def defringe(cut, bg):
     return Image.fromarray(out, "RGBA")
 
 
+def swap_in(tmp, target):
+    for attempt in range(10):
+        try:
+            tmp.replace(target)
+            return True
+        except PermissionError:
+            time.sleep(0.5)
+    print(f"LOCKED {target}: another program has it open, left the new photo as {tmp.name}")
+    return False
+
+
+def finish_leftovers(root):
+    fixed = 0
+    for tmp in sorted(root.rglob("*.tmp.webp")):
+        target = tmp.with_name(tmp.name[: -len(".tmp.webp")] + ".webp")
+        if swap_in(tmp, target):
+            print(f"fixed {target}")
+            fixed += 1
+    if fixed:
+        print(f"Renamed {fixed} leftover .tmp.webp photo(s).")
+
+
 def process(path, session, backup_root, dry_run):
     with Image.open(path) as src:
         rgb_img = src.convert("RGB")
@@ -82,8 +105,8 @@ def process(path, session, backup_root, dry_run):
     cut.save(tmp, "WEBP", quality=QUALITY, method=6)
     if path != target and path.exists():
         path.unlink()
-    tmp.replace(target)
-    print(f"done  {target}")
+    if swap_in(tmp, target):
+        print(f"done  {target}")
 
 
 def main():
@@ -99,6 +122,9 @@ def main():
     root = Path(args.root)
     if not root.exists():
         sys.exit(f"{root} not found. Run this from the root of the site.")
+
+    if not args.dry_run:
+        finish_leftovers(root)
 
     skip = {name.lower() for name in list(ALWAYS_SKIP) + args.skip}
     todo = []

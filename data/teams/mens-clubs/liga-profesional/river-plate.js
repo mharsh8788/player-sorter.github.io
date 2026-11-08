@@ -64,11 +64,11 @@ registerTeam({
     }
   },
   players: [
-    { id: "santiago-beltran", name: "Santiago Beltrán", number: 41, position: "GK", nation: "ARG" },
+    { id: "beltran", name: "Santiago Beltrán", number: 41, position: "GK", nation: "ARG" },
     { id: "centurion", name: "Ezequiel Centurión", number: 33, position: "GK", nation: "ARG" },
-    { id: "jaroszewicz", name: "Franco Jaroszewicz", number: 42, position: "GK", nation: "ARG" },
+    { id: "martinet", name: "Jeremías Martinet", number: 57, position: "GK", nation: "ARG" },
 
-    { id: "tobias-ramirez", name: "Tobías Ramírez", number: 2, position: "DF", nation: "ARG" },
+    { id: "ramirez", name: "Tobías Ramírez", number: 2, position: "DF", nation: "ARG" },
     { id: "ortega", name: "Francisco Ortega", number: 3, position: "DF", nation: "ARG" },
     { id: "portillo", name: "Juan Portillo", number: 5, position: "DF", nation: "ARG" },
     { id: "rivero", name: "Lautaro Rivero", number: 13, position: "DF", nation: "ARG" },
@@ -83,10 +83,10 @@ registerTeam({
     { id: "arambarri", name: "Mauro Arambarri", number: 8, position: "MF", nation: "URU" },
     { id: "vera", name: "Fausto Vera", number: 15, position: "MF", nation: "ARG" },
     { id: "almada", name: "Thiago Almada", number: 23, position: "MF", nation: "ARG" },
-    { id: "juan-cruz-meza", name: "Juan Cruz Meza", number: 24, position: "MF", nation: "ARG" },
+    { id: "meza", name: "Juan Cruz Meza", number: 24, position: "MF", nation: "ARG" },
     { id: "pereyra", name: "Lautaro Pereyra", number: 25, position: "MF", nation: "ARG" },
     { id: "galvan", name: "Tomás Galván", number: 26, position: "MF", nation: "ARG" },
-    { id: "lucas-silva", name: "Lucas Silva", number: 44, position: "MF", nation: "ARG" },
+    { id: "silva", name: "Lucas Silva", number: 44, position: "MF", nation: "ARG" },
     { id: "andrada", name: "Tobías Andrada", number: 50, position: "MF", nation: "ARG" },
 
     { id: "driussi", name: "Sebastián Driussi", number: 9, position: "FW", nation: "ARG" },

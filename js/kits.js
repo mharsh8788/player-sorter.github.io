@@ -101,9 +101,26 @@
     const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="' + pts + '" fill="' + color + '"/></svg>';
     return "url('data:image/svg+xml," + encodeURIComponent(svg) + "')";
   }
+
+  function diamondsSvg(p) {
+    const bands = p.bands && p.bands.length ? p.bands : ["#FFFFFF"];
+    const colors = bands.length >= 3 ? bands.slice(0, 3) : bands.concat(Array(3 - bands.length).fill(bands[0] || "#FFFFFF"));
+    const segment = 100 / colors.length;
+    const gap = 0;
+    const shapes = colors.map((color, i) => {
+      const x0 = i * segment + gap * 0.7;
+      const x1 = (i + 1) * segment - gap * 0.7;
+      const pts = [[x0, 0], [x0, 50], [x1, 100], [x1, 50]].map(pt => pt.join(",")).join(" ");
+      return '<polygon points="' + pts + '" fill="' + color + '"/>';
+    }).join("");
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">' + shapes + '</svg>';
+    return "url('data:image/svg+xml," + encodeURIComponent(svg) + "') center / 100% 100% no-repeat, " + p.base;
+  }
   const RAYO_BOLT = [[78, 0], [96, 0], [77, 38], [89, 38], [48, 100], [28, 100], [60, 52], [48, 52]];
 
   const TIP = [[0.24, 0.3], [0.33, 0.39]];
+
+  const FADE = [0.4, 0.62];
 
   const SLEEVE_L = [[0, 0], [30, 0], [22, 46], [0, 60]];
 
@@ -126,6 +143,29 @@
     return "url('data:image/svg+xml," + encodeURIComponent(svg) + "')";
   }
 
+  function wavesSvg(p) {
+    const color = (p.bands && p.bands[0]) || "#FFFFFF";
+    const rows = 12;
+    const amplitude = 6.4;
+    const phase = 0.75;
+    const paths = Array.from({ length: rows }, (_, i) => {
+      const y = (i + 0.5) * (100 / rows);
+      const d = Array.from({ length: 26 }, (_, j) => {
+        const x = (j / 25) * 100;
+        const yy = y + Math.sin((x / 100) * Math.PI * 4 + phase) * amplitude;
+        return (j === 0 ? "M" : "L") + " " + x + " " + yy;
+      }).join(" ");
+      return '<path d="' + d + '" fill="none" stroke="' + color + '" stroke-width="1.2" stroke-linecap="round" opacity="' + (0.28 + (i % 4) * 0.14) + '"/>';
+    }).join("");
+    return "url('data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">' + paths + '</svg>') + "') center / 100% 100% no-repeat, " + p.base;
+  }
+
+  function chevronSvg(p) {
+    const color = (p.bands && p.bands[0]) || "#FFFFFF";
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="0,0 50,100 100,0" fill="' + color + '"/></svg>';
+    return "url('data:image/svg+xml," + encodeURIComponent(svg) + "') center / 100% 100% no-repeat, " + p.base;
+  }
+
   const CHECKS = 6;
 
   function trianglesSvg(c, fadeTo, opacity) {
@@ -139,12 +179,33 @@
       '<rect width="100%" height="100%" fill="url(#t)" mask="url(#m)" opacity="' + opacity + '"/></svg>';
   }
 
+  // Halftone dots on a 200x100 grid: small and sparse at the bottom-left, large and dense
+  // toward the top-right (Orlando City's "digital storm" body pattern).
+  const DOTS = (function () {
+    const out = [];
+    for (let row = 0, y = 4; y < 100; row++, y = 4 + row * 7) {
+      for (let x = 4 + (row % 2 ? 4 : 0); x < 200; x += 8) {
+        const t = Math.max(0, Math.min(1, 0.55 * (x / 200) + 0.45 * (1 - y / 100)));
+        out.push([x, y, 0.5 + 3.2 * Math.pow(t, 1.15)]);
+      }
+    }
+    return out;
+  })();
+
+  function dotsSvg(c) {
+    const circles = DOTS.map(d => '<circle cx="' + d[0] + '" cy="' + d[1] + '" r="' + d[2].toFixed(2) + '"/>').join("");
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" preserveAspectRatio="xMidYMid slice"><g fill="' + c + '">' + circles + "</g></svg>";
+  }
+
   function pct(n) {
     return (n * 100).toFixed(2) + "%";
   }
 
   function css(p) {
     const b = p.bands || [];
+    if (p.type === "dots") {
+      return "url('data:image/svg+xml," + encodeURIComponent(dotsSvg(b[0] || "#FFFFFF")) + "') center / cover no-repeat, " + p.base;
+    }
     if (p.type === "stripes") {
       return "repeating-linear-gradient(90deg, " + p.base + " 0 18%, " + b[0] + " 18% 30%)";
     }
@@ -157,6 +218,10 @@
     if (p.type === "gradient") {
       return "linear-gradient(180deg, " + p.base + ", " + (b[0] || p.base) + ")";
     }
+    if (p.type === "fade") {
+      // left half base colour, softly blending into the band colour on the right (Cagliari)
+      return "linear-gradient(90deg, " + p.base + " 0 " + pct(FADE[0]) + ", " + (b[0] || p.base) + " " + pct(FADE[1]) + " 100%)";
+    }
     if (p.type === "sleeves") {
       const c = b[0] || "#FFFFFF";
       const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">' +
@@ -166,6 +231,9 @@
     }
     if (p.type === "zigzag") {
       return zigzagSvg(p) + " center / 100% 100% no-repeat, " + p.base;
+    }
+    if (p.type === "waves") {
+      return wavesSvg(p);
     }
     if (p.type === "lightning") {
       const c = b[0] || "#FFFFFF";
@@ -177,6 +245,9 @@
       const c = b[0] || "#FFFFFF";
       const svg = trianglesSvg(c, 0.12, 1);
       return "url('data:image/svg+xml," + encodeURIComponent(svg) + "') center / 100% 100% no-repeat, " + p.base;
+    }
+    if (p.type === "chevron") {
+      return chevronSvg(p);
     }
     if (p.type === "centreband") {
       const edge = b[0] || "#FFFFFF";
@@ -192,6 +263,9 @@
     }
     if (p.type === "sash") {
       return sashSvg(p) + " center / 100% 100% no-repeat, " + p.base;
+    }
+    if (p.type === "diamonds") {
+      return diamondsSvg(p);
     }
     if (p.type === "tipping") {
       const c = b.length ? b : ["#000000"];
@@ -250,6 +324,22 @@
       const bandW = period * (p.type === "stripes" ? 0.4 : 2 / 17);
       ctx.fillStyle = b[0];
       for (let sx = x; sx < x + w; sx += period) ctx.fillRect(sx + period * offset, y, bandW, h);
+    } else if (p.type === "diamonds") {
+      const colors = b.length >= 3 ? b.slice(0, 3) : b.concat(Array(3 - b.length).fill(b[0] || "#FFFFFF"));
+      const segment = w / colors.length;
+      const gap = 2.5;
+      colors.forEach((color, i) => {
+        const x0 = x + i * segment + gap * 0.7;
+        const x1 = x + (i + 1) * segment - gap * 0.7;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(x0, y + h * 0.06);
+        ctx.lineTo(x0, y + h * 0.34);
+        ctx.lineTo(x1, y + h * 0.96);
+        ctx.lineTo(x1, y + h * 0.68);
+        ctx.closePath();
+        ctx.fill();
+      });
     } else if (p.type === "bolts") {
       ctx.save();
       ctx.beginPath();
@@ -304,6 +394,30 @@
         ctx.stroke();
       });
       ctx.restore();
+    } else if (p.type === "waves") {
+      const color = b[0] || "#FFFFFF";
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(x, y, w, h);
+      ctx.clip();
+      const rows = Math.max(8, Math.round(h / 12));
+      const amplitude = h * 0.04;
+      const phase = 0.75;
+      for (let i = 0; i < rows; i++) {
+        const waveY = y + ((i + 0.5) / rows) * h;
+        ctx.beginPath();
+        for (let q = 0; q <= 80; q++) {
+          const px = x + (q / 80) * w;
+          const py = waveY + Math.sin((q / 80) * Math.PI * 2 * 2 + phase) * amplitude;
+          if (q === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+        }
+        ctx.strokeStyle = color;
+        ctx.lineWidth = Math.max(1.0, h * 0.006);
+        ctx.lineCap = "round";
+        ctx.globalAlpha = 0.24 + ((i % 4) + 1) * 0.14;
+        ctx.stroke();
+      }
+      ctx.restore();
     } else if (p.type === "lightning") {
       ctx.fillStyle = b[0] || "#FFFFFF";
       ctx.beginPath();
@@ -314,6 +428,21 @@
       });
       ctx.closePath();
       ctx.fill();
+    } else if (p.type === "dots") {
+      const s = Math.max(w / 200, h / 100);
+      const ox = x + (w - 200 * s) / 2;
+      const oy = y + (h - 100 * s) / 2;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(x, y, w, h);
+      ctx.clip();
+      ctx.fillStyle = b[0] || "#FFFFFF";
+      DOTS.forEach(d => {
+        ctx.beginPath();
+        ctx.arc(ox + d[0] * s, oy + d[1] * s, d[2] * s, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.restore();
     } else if (p.type === "triangles") {
       const c = b[0] || "#FFFFFF";
       const off = document.createElement("canvas");
@@ -349,6 +478,14 @@
       o.fillStyle = fade;
       o.fillRect(0, 0, off.width, off.height);
       ctx.drawImage(off, x, y, w, h);
+    } else if (p.type === "chevron") {
+      ctx.fillStyle = b[0] || "#FFFFFF";
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + w / 2, y + h);
+      ctx.lineTo(x + w, y);
+      ctx.closePath();
+      ctx.fill();
     } else if (p.type === "centreband") {
       const edge = b[0] || "#FFFFFF";
       ctx.fillStyle = edge;
@@ -377,6 +514,12 @@
         ctx.fillStyle = c[i % c.length];
         ctx.fillRect(x, y + h * from, w, h * (to - from));
       });
+    } else if (p.type === "fade") {
+      const g = ctx.createLinearGradient(x, y, x + w, y);
+      g.addColorStop(FADE[0], p.base);
+      g.addColorStop(FADE[1], b[0] || p.base);
+      ctx.fillStyle = g;
+      ctx.fillRect(x, y, w, h);
     } else if (p.type === "gradient") {
       const g = ctx.createLinearGradient(x, y, x, y + h);
       g.addColorStop(0, p.base);
@@ -432,5 +575,10 @@
     return "rgb(" + c.join(",") + ")";
   }
 
-  window.Kits = { ids, get, css, draw, mix };
+  function isLight(hex) {
+    const c = hexRgb(hex);
+    return !!c && (0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]) / 255 > 0.85;
+  }
+
+  window.Kits = { ids, get, css, draw, mix, isLight, dots: DOTS };
 })();

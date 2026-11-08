@@ -43,7 +43,7 @@ registerTeam({
       header: "#161616",
       onHeader: "#EDEDED",
       headerBand: "#5B5B5B",
-      pattern: { type: "sleeves", base: "#161616", bands: ["#2E2E2E"] }
+      pattern: { type: "plain", base: "#161616", bands: ["#2E2E2E"] }
     }
   },
   players: [

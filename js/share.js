@@ -69,6 +69,27 @@
     ctx.closePath();
   }
 
+  function hexToRgba(hex, alpha) {
+    if (!hex) return "rgba(0, 0, 0, " + alpha + ")";
+    const clean = String(hex).trim().replace(/^#/, "");
+    if (/^[0-9a-fA-F]{3}$/.test(clean)) {
+      const expanded = clean.split("").map(ch => ch + ch).join("");
+      const n = parseInt(expanded, 16);
+      const r = (n >> 16) & 255;
+      const g = (n >> 8) & 255;
+      const b = n & 255;
+      return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
+    }
+    if (/^[0-9a-fA-F]{6}$/.test(clean)) {
+      const n = parseInt(clean, 16);
+      const r = (n >> 16) & 255;
+      const g = (n >> 8) & 255;
+      const b = n & 255;
+      return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
+    }
+    return "rgba(0, 0, 0, " + alpha + ")";
+  }
+
   function font(weight, size, family, italic) {
     return (italic ? "italic " : "") + weight + " " + Math.round(size) + "px " + family;
   }
@@ -137,7 +158,7 @@
     const from = Math.max(clearX || 0, 0);
     const room = f.w - from;
     ctx.save();
-    if (["zigzag", "hoops", "split", "sash", "lightning", "checks", "triangles"].indexOf(p.type) >= 0) {
+    if (["zigzag", "hoops", "split", "sash", "diamonds", "lightning", "checks", "triangles", "chevron", "sleeves", "centreband", "band", "cross", "dots"].indexOf(p.type) >= 0) {
       if (room < 150) {
         ctx.restore();
         return;
@@ -150,6 +171,23 @@
       ctx.globalAlpha = k.headerPatternAlpha != null ? k.headerPatternAlpha : 0.1;
       ctx.fillStyle = k.headerPatternAlpha != null ? band : k.onHeader;
       for (let x = 54; x < f.w; x += 108) ctx.fillRect(x, 0, 54, h);
+    } else if (p.type === "diamonds") {
+      const bands = p.bands && p.bands.length ? p.bands : [k.onHeader];
+      const colors = bands.length >= 3 ? bands.slice(0, 3) : bands.concat(Array(3 - bands.length).fill(bands[0] || k.onHeader));
+      const segment = room / colors.length;
+      const gap = 0;
+      colors.forEach((color, i) => {
+        const x0 = from + i * segment + gap * 0.7;
+        const x1 = from + (i + 1) * segment - gap * 0.7;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(x0, 0);
+        ctx.lineTo(x0, h * 0.5);
+        ctx.lineTo(x1, h);
+        ctx.lineTo(x1, h * 0.5);
+        ctx.closePath();
+        ctx.fill();
+      });
     } else if (p.type === "pinstripe") {
       ctx.globalAlpha = 0.28;
       ctx.fillStyle = band;
@@ -187,6 +225,23 @@
         }
         ctx.stroke();
       });
+    } else if (p.type === "waves") {
+      const colors = p.bands && p.bands.length ? p.bands : [band];
+      const rows = 10;
+      const amplitude = Math.min(h * 0.18, 16);
+      const phase = 0.75;
+      for (let i = 0; i < rows; i++) {
+        const yBase = ((i + 0.5) / rows) * h;
+        ctx.beginPath();
+        for (let x = 0; x <= f.w; x += 10) {
+          const y = yBase + Math.sin((x / 120) * Math.PI * 2 + phase) * amplitude;
+          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = colors[i % colors.length];
+        ctx.lineWidth = 2.2;
+        ctx.globalAlpha = 0.3 + ((i % 4) + 1) * 0.12;
+        ctx.stroke();
+      }
     } else if (p.type === "sash") {
       const bw = Math.min(120, room * 0.38);
       const x0 = Math.max(from + 20, f.w - bw - h * 0.9);
@@ -214,6 +269,53 @@
         ctx.closePath();
         ctx.fill();
       }
+    } else if (p.type === "sleeves") {
+      const c = p.bands && p.bands[0] ? p.bands[0] : k.onHeader;
+      const sleeveW = Math.min(120, Math.max(60, room * 0.18));
+      const sleeveH = h * 0.7;
+      const dy = (h - sleeveH) / 2;
+      const drawSleeve = (x, flip) => {
+        ctx.fillStyle = c;
+        ctx.beginPath();
+        [[0, 0], [30, 0], [22, 46], [0, 60]].forEach(([px, py], j) => {
+          const X = x + (flip ? (100 - px) : px) / 100 * sleeveW;
+          const Y = dy + (py / 100) * sleeveH;
+          if (j) ctx.lineTo(X, Y); else ctx.moveTo(X, Y);
+        });
+        ctx.closePath();
+        ctx.fill();
+      };
+      drawSleeve(from + 10, false);
+      drawSleeve(f.w - sleeveW - 10, true);
+    } else if (p.type === "centreband") {
+      const edge = p.bands && p.bands[0] ? p.bands[0] : k.onHeader;
+      const mid = p.bands && p.bands[1] ? p.bands[1] : edge;
+      ctx.fillStyle = edge;
+      ctx.fillRect(from + room * 0.33, 0, room * (0.67 - 0.33), h);
+      ctx.fillStyle = mid;
+      ctx.fillRect(from + room * 0.39, 0, room * (0.61 - 0.39), h);
+    } else if (p.type === "band") {
+      const edge = p.bands && p.bands[0] ? p.bands[0] : k.onHeader;
+      const mid = p.bands && p.bands[1] ? p.bands[1] : edge;
+      ctx.fillStyle = edge;
+      ctx.fillRect(from, h * 0.36, room, h * (0.64 - 0.36));
+      ctx.fillStyle = mid;
+      ctx.fillRect(from, h * 0.41, room, h * (0.59 - 0.41));
+    } else if (p.type === "cross") {
+      const white = p.bands && p.bands[0] ? p.bands[0] : "#FFFFFF";
+      const blue = p.bands && p.bands[1] ? p.bands[1] : "#00205B";
+      const centerX = f.w * 0.65;
+      const startX = f.w * 0.49;
+      const whiteWidth = Math.min(h * 0.12, f.w * 0.05);
+      const blueWidth = whiteWidth * 1.05;
+      const whiteSpan = whiteWidth * 2.2;
+      const blueSpan = blueWidth * 1.15;
+      ctx.fillStyle = white;
+      ctx.fillRect(centerX - whiteSpan / 2, 0, whiteSpan, h);
+      ctx.fillRect(startX, h * 0.5 - whiteSpan / 2, f.w - startX, whiteSpan);
+      ctx.fillStyle = blue;
+      ctx.fillRect(centerX - blueSpan / 2, 0, blueSpan, h);
+      ctx.fillRect(startX, h * 0.5 - blueSpan / 2, f.w, blueSpan);
     } else if (p.type === "tipping") {
       const colors = p.bands && p.bands.length ? p.bands : [k.onHeader];
       const bandH = Math.round(f.head * 0.035);
@@ -250,6 +352,17 @@
       for (let r = 0; r < 4; r++) {
         for (let q = r % 2; q < cols; q += 2) ctx.fillRect(x0 + q * cell, r * cell, cell, cell);
       }
+    } else if (p.type === "dots") {
+      const s = Math.max(room / 200, h / 100);
+      const ox = from + (room - 200 * s) / 2;
+      const oy = (h - 100 * s) / 2;
+      ctx.fillStyle = band;
+      ctx.globalAlpha = 0.85;
+      Kits.dots.forEach(d => {
+        ctx.beginPath();
+        ctx.arc(ox + d[0] * s, oy + d[1] * s, d[2] * s, 0, Math.PI * 2);
+        ctx.fill();
+      });
     } else if (p.type === "triangles") {
       const start = Math.max(f.w * 0.45, from + 12);
       const tw = 36;
@@ -276,6 +389,24 @@
           ctx.fill();
         }
       }
+    } else if (p.type === "chevron") {
+      const centerX = from + ((f.w - from) * 0.5);
+      const size = Math.max(60, room * 0.58);
+      const left = from;
+      const right = f.w;
+      const top = 0;
+      const bottom = h;
+      ctx.fillStyle = band;
+      ctx.beginPath();
+      ctx.moveTo(left, top);
+      ctx.lineTo(centerX, bottom);
+      ctx.lineTo(right, top);
+      ctx.closePath();
+      ctx.fill();
+      ctx.globalAlpha = 0;
+      ctx.fillStyle = k.onHeader;
+      ctx.fillRect(left, top, size, bottom);
+      ctx.globalAlpha = 1;
     } else if (p.type === "hoops") {
       const colors = p.bands && p.bands.length ? p.bands : [k.onHeader];
       const bandH = Math.round(f.head * 0.028);
@@ -340,10 +471,10 @@
     const eyebrowW = ctx.measureText("MY RANKING").width + 40;
     const clearX = textX + Math.max(titleW, subW, eyebrowW) + 36;
 
-    ctx.fillStyle = k.header;
-    ctx.fillRect(0, 0, f.w, f.head);
+      ctx.fillStyle = k.header;
+      ctx.fillRect(0, 0, f.w, f.head);
     headerPattern(ctx, f, k, clearX);
-    headerCollar(ctx, f, k, clearX);
+        headerCollar(ctx, f, k, clearX);
     ctx.fillStyle = k.headerBand;
     ctx.fillRect(0, f.head - 14, f.w, 14);
 
@@ -465,7 +596,7 @@
     ctx.textBaseline = "alphabetic";
     if (twoLine) {
       const metaSize = nameSize ? Math.min(Math.max(16, nameSize * 0.62), 32) : Math.min(Math.max(18, h * 0.14), 32);
-      const meta = [entry.positionLabel, entry.player.number != null ? "#" + entry.player.number : ""].filter(Boolean).join(" · ");
+      const meta = entry.metaLine || [entry.positionLabel, entry.player.number != null ? "#" + entry.player.number : ""].filter(Boolean).join(" · ");
       const nameAsc = ctx.measureText(nameText).actualBoundingBoxAscent;
       ctx.font = font(500, metaSize, BODY);
       const mm = ctx.measureText(meta);
@@ -634,7 +765,7 @@
     ctx.fillRect(0, 0, f.w, f.h);
 
     const modeLabel = mode === "top3" ? "Top 3" : mode === "top10" ? "Top 10" : team.squadLabel ? "All " + team.squadLabel : "Full squad";
-    drawHeader(ctx, f, kit, team, crestImg, team.season + " " + (team.squadLabel || "squad") + " · " + modeLabel + (subtitleExtra || ""));
+    drawHeader(ctx, f, kit, team, crestImg, (team.shareLabel || team.season + " " + (team.squadLabel || "squad")) + " · " + modeLabel + (subtitleExtra || ""));
 
     layoutList(ctx, f, shown, imgs, f.head + 36, f.h - f.foot - 28, kit);
 
@@ -722,7 +853,7 @@
     view.setAttribute("role", "dialog");
     view.setAttribute("aria-modal", "true");
     view.innerHTML =
-      '<button type="button" class="save-view-close" aria-label="Close">×</button>' +
+      '<button type="button" class="save-view-close" aria-label="Close"><svg class="x-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>' +
       '<p class="save-view-tip"></p>' +
       (escapeHref
         ? '<p class="save-view-sub save-view-stuck">If press & hold isn\'t working, please open in your browser. Twitter browser is buggy and I can\'t figure out how to fix it. I\'m sorry.</p>'

@@ -49,7 +49,7 @@ registerTeam({
   players: [
     { id: "montero", name: "Álvaro Montero", number: 1, position: "GK", nation: "COL" },
     { id: "brey", name: "Leandro Brey", number: 12, position: "GK", nation: "ARG" },
-    { id: "javier-garcia", name: "Javier García", number: 30, position: "GK", nation: "ARG" },
+    { id: "garcia", name: "Javier García", number: 30, position: "GK", nation: "ARG" },
 
     { id: "di-lollo", name: "Lautaro Di Lollo", number: 2, position: "DF", nation: "ARG" },
     { id: "blanco", name: "Lautaro Blanco", number: 3, position: "DF", nation: "ARG" },
@@ -72,7 +72,7 @@ registerTeam({
     { id: "ascacibar", name: "Santiago Ascacíbar", number: 25, position: "MF", nation: "ARG" },
     { id: "braida", name: "Malcom Braida", number: 27, position: "MF", nation: "ARG" },
 
-    { id: "milton-gimenez", name: "Milton Giménez", number: 9, position: "FW", nation: "ARG" },
+    { id: "gimenez", name: "Milton Giménez", number: 9, position: "FW", nation: "ARG" },
     { id: "romero", name: "Ángel Romero", number: 11, position: "FW", nation: "PAR" },
     { id: "valencia", name: "Enner Valencia", number: 13, position: "FW", nation: "ECU" },
     { id: "merentiel", name: "Miguel Merentiel", number: 16, position: "FW", nation: "URU" },

@@ -2,3 +2,6 @@ bg-backup/
 __pycache__/
 .DS_Store
 .venv/
+tools/pages
+requirements.txt
+.python-version
