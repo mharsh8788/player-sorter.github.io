@@ -24,7 +24,7 @@ window.SQUAD_MANIFEST = {
           id: "bundesliga",
           name: "Bundesliga",
           country: "Germany",
-          teams: ["bayern-munich", "dortmund", "schalke", "stuttgart"]
+          teams: ["bayern-munich", "dortmund", "schalke", "stuttgart", "leverkusen"]
         },
         {
           id: "ligue-1",
