@@ -47,7 +47,7 @@ registerTeam({
       onPrimary: "#172033",
       accent: "#8A2935",
       onAccent: "#FFFFFF",
-      photoBg: "#BFE5ED",
+      photoBg: "#9FD3E0",
       photoInk: "#172033",
       labelBg: "#342830",
       header: "#E6EDF0",
