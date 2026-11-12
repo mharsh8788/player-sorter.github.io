@@ -733,6 +733,13 @@ body.modal-open { overflow: hidden; }
   --club-on-accent: var(--club-on-primary);
 }
 
+[data-club="aek-athens"] .kit-seg {
+  --club-accent: #F3CC4A;
+  --club-on-accent: #172033;
+  background: #242022;
+  color: #FFFFFF;
+}
+
 .swatch {
   display: inline-block;
   width: 16px;
@@ -778,7 +785,7 @@ body.modal-open { overflow: hidden; }
   z-index: -1;
   background: var(--tile-pattern);
   background-size: 100% 100%;
-  opacity: 0.55;
+  opacity: var(--tile-pattern-opacity, 0.55);
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 75%);
   mask-image: linear-gradient(90deg, transparent, #000 75%);
   border-radius: 0 var(--tile-radius, var(--radius)) var(--tile-radius, var(--radius)) 0;
