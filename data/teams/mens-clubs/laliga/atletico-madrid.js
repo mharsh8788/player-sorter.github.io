@@ -5,6 +5,7 @@ registerTeam({
   monogram: "ATM",
   league: "laliga",
   season: "2026/27",
+  tile: { bg: "#CE3524", fg: "#FFFFFF", muted: "rgba(255,255,255,0.8)", patternOpacity: 1, border: "#CE3524", borderWidth: 2, pattern: { type: "rulestripes", base: "#CE3524", bands: ["#FFFFFF", "#262F61"] } },
   kits: {
     home: {
       label: "Home",
@@ -25,7 +26,7 @@ registerTeam({
       onHeader: "#FFFFFF",
       headerBand: "#262F61",
       rowTintStrength: 0.15,
-      pattern: { type: "stripes", base: "#CE3524", bands: ["#FFFFFF"] }
+      pattern: { type: "rulestripes", base: "#CE3524", bands: ["#FFFFFF", "#262F61"] }
     },
     away: {
       label: "Away",
@@ -39,10 +40,11 @@ registerTeam({
       onPrimary: "#0D0E10",
       accent: "#F2F3EE",
       onAccent: "#0D0E10",
+      headerDecor: { type: "neon-curves", color: "#D7FF1F" },
       header: "#0B0B0C",
       onHeader: "#D7FF1F",
       headerBand: "#D7FF1F",
-      pattern: { type: "bolts", base: "#0F1012", bands: ["#D7FF1F"] }
+      pattern: { type: "prism", base: "#0B0C0E", bands: ["#3A3D43", "#6A6E77"] }
     },
     third: {
       label: "Third",
@@ -54,13 +56,13 @@ registerTeam({
       onPrimary: "#FFFFFF",
       accent: "#262F61",
       onAccent: "#FFFFFF",
-      header: "#8B8F96",
-      onHeader: "#FFFFFF",
-      headerBand: "#262F61",
+      header: "#BCC4CD",
+      onHeader: "#1B2447",
+      headerBand: "#CC2040",
       rowTint: "#262F61",
       rowTintStrength: 0.24,
       rowTintFloor: 0.5,
-      pattern: { type: "hoops", base: "#8B8F96", bands: ["#C8302A", "#262F61"] }
+      pattern: { type: "railstripes", base: "#BCC4CD", bands: ["#CC2040", "#323D5B", "#8995A5"] }
     }
   },
   players: [
