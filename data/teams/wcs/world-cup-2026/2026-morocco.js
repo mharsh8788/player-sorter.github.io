@@ -20,7 +20,7 @@ registerTeam({
       primary: "#B12038",
       onPrimary: "#DDC491",
       accent: "#DDC491",
-      onAccent: "#58885B",
+      onAccent: "#B12038",
       header: "#B12038",
       onHeader: "#DDC491",
       headerBand: "#58885B",

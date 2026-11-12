@@ -493,8 +493,9 @@
       "--tile-bg:" + tile.bg,
       "--tile-fg:" + tile.fg,
       "--tile-muted:" + tile.muted,
-      "--tile-pattern:" + Kits.css(tile.pattern)
-    ].join(";");
+      "--tile-pattern:" + Kits.css(tile.pattern),
+      "--tile-pattern-opacity:" + (tile.patternOpacity != null ? tile.patternOpacity : 0.55)
+    ].concat(tile.border ? ["border:" + (tile.borderWidth || 2) + "px solid " + tile.border, "--tile-radius:calc(var(--radius) - " + (tile.borderWidth || 2) + "px)"] : []).join(";");
     const light = Kits.isLight(tile.bg) ? " is-light" : "";
     return (
       '<button type="button" class="team-tile team-tile-club' + light + '" data-go="' + team.id + '" style="' + tileVars + '">' +
@@ -529,7 +530,7 @@
     );
   }
 
-  const PINNED_FIRST = new Set(["atletico-madrid"]);
+  const PINNED_FIRST = new Set(["atletico-madrid", "benfica"]);
   let rankCounts = null;
 
   function podiumTier(group, id) {

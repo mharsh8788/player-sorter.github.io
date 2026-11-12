@@ -42,6 +42,8 @@ registerTeam({
       onPrimary: "#04348E",
       accent: "#04348E",
       onAccent: "#E5DB8E",
+      photoBg: "#E5DB8E",
+      photoInk: "#04348E",
       header: "#04348E",
       onHeader: "#E5DB8E",
       headerBand: "#1C75D6",

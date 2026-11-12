@@ -18,7 +18,7 @@ window.SQUAD_MANIFEST = {
           id: "premier-league",
           name: "Premier League",
           country: "England",
-          teams: ["arsenal", "liverpool", "manchester-city", "manchester-united", "aston-villa", "chelsea", "tottenham", "newcastle", "fulham", "leeds", "everton", "bournemouth", "brighton", "ipswich-town"]
+          teams: ["arsenal", "liverpool", "manchester-city", "manchester-united", "aston-villa", "chelsea", "tottenham", "newcastle", "fulham", "leeds", "everton", "bournemouth", "brighton", "ipswich-town"]//, "sunderland"]
         },
         {
           id: "bundesliga",
@@ -30,7 +30,7 @@ window.SQUAD_MANIFEST = {
           id: "ligue-1",
           name: "Ligue 1",
           country: "France",
-          teams: ["psg", "monaco", "paris-fc", "marseille", "lyon", "lille"]
+          teams: ["psg", "monaco", "paris-fc", "marseille", "lyon", "lille", "lens"]
         },
         {
           id: "serie-a",
@@ -48,7 +48,7 @@ window.SQUAD_MANIFEST = {
           id: "liga-portugal",
           name: "Liga Portugal",
           country: "Portugal",
-          teams: ["benfica"]
+          teams: ["benfica", "porto", "sporting"]
         },
         {
           id: "mls",
@@ -84,13 +84,43 @@ window.SQUAD_MANIFEST = {
           id: "greek-super-league",
           name: "Greek Super League",
           country: "Greece",
-          teams: ["olympiacos"]
+          teams: ["olympiacos", "aek-athens"]
+        },
+        {
+          id: "belgian-pro-league",
+          name: "Belgian Pro League",
+          country: "Belgium",
+          teams: ["club-brugge"]
+        },
+        {
+          id: "czech-first-league",
+          name: "Czech First League",
+          country: "Czechia",
+          teams: ["slavia-praha"]
+        },
+        {
+          id: "eliteserien",
+          name: "Eliteserien",
+          country: "Norway",
+          teams: ["bodo-glimt", "viking"]
+        },
+        {
+          id: "austrian-bundesliga",
+          name: "Austrian Bundesliga",
+          country: "Austria",
+          teams: ["lask"]
+        },
+        {
+          id: "ukrainian-premier-league",
+          name: "Ukrainian Premier League",
+          country: "Ukraine",
+          teams: ["shakhtar-donetsk"]
         },
         {
           id: "championship",
           name: "Championship",
           country: "England",
-          teams: ["queens-park-rangers", "west-ham-united", "wolves"]//, "sheffield-united"]
+          teams: ["queens-park-rangers", "west-ham-united", "wolves"]//, "sheffield-united", "southampton", "swansea"]
         },
         {
           id: "laliga-hypermotion",
@@ -103,6 +133,18 @@ window.SQUAD_MANIFEST = {
           name: "Primera Federación",
           country: "Spain",
           teams: ["real-zaragoza"]
+        },
+        {
+          id: "azerbaijan-premier-league",
+          name: "Azerbaijan Premier League",
+          country: "Azerbaijan",
+          teams: ["sabah"]
+        },
+        {
+          id: "slovak-super-liga",
+          name: "Slovak Super Liga",
+          country: "Slovakia",
+          teams: ["slovan-bratislava"]
         },
         /*
         {
@@ -148,6 +190,12 @@ window.SQUAD_MANIFEST = {
           name: "Frauen-Bundesliga",
           country: "Germany",
           teams: ["bayern-munich-women"]
+        },
+        {
+          id: "liga-bpi",
+          name: "Liga BPI",
+          country: "Portugal",
+          teams: ["benfica-femenino"]
         }
       ]
     },
@@ -173,7 +221,11 @@ window.SQUAD_MANIFEST = {
             "2026-belgium",
             "2026-algeria",
             "2026-egypt",
-            "2026-usa"
+            "2026-usa",
+            "2026-sweden",
+            "2026-morocco",
+            "2026-netherlands",
+            "2026-australia"
           ],
           podium: { winner: "2026-spain", finalist: "2026-argentina", semis: ["2026-france", "2026-england"] }
         },
