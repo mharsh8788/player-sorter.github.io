@@ -92,6 +92,7 @@ registerTeam({
     { id: "baum", name: "Lisa Baum", number: 19, position: "FW", nation: "GER" },
     { id: "russo", name: "Alessia Russo", number: 23, position: "FW", nation: "ENG" },
     { id: "blackstenius", name: "Stina Blackstenius", number: 25, position: "FW", nation: "SWE" },
-    { id: "cerci", name: "Selina Cerci", number: 29, position: "FW", nation: "GER" }
+    { id: "cerci", name: "Selina Cerci", number: 29, position: "FW", nation: "GER" },
+    { id: "agyemang", name: "Michelle Agyemang", number: 17, position: "FW", nation: "ENG" }
   ]
 });

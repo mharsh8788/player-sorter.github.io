@@ -18,7 +18,7 @@ window.SQUAD_MANIFEST = {
           id: "premier-league",
           name: "Premier League",
           country: "England",
-          teams: ["arsenal", "liverpool", "manchester-city", "manchester-united", "aston-villa", "chelsea", "tottenham", "newcastle", "fulham", "leeds", "everton", "bournemouth", "brighton", "ipswich-town"]//, "sunderland"]
+          teams: ["arsenal", "liverpool", "manchester-city", "manchester-united", "aston-villa", "chelsea", "tottenham", "newcastle", "fulham", "leeds", "everton", "bournemouth", "brighton", "ipswich-town", "nottingham-forest", "crystal-palace", "sunderland"]
         },
         {
           id: "bundesliga",
@@ -105,6 +105,12 @@ window.SQUAD_MANIFEST = {
           teams: ["bodo-glimt", "viking"]
         },
         {
+          id: "scottish-premiership",
+          name: "Scottish Premiership",
+          country: "Scotland",
+          teams: ["celtic"]
+        },
+        {
           id: "austrian-bundesliga",
           name: "Austrian Bundesliga",
           country: "Austria",
@@ -120,7 +126,7 @@ window.SQUAD_MANIFEST = {
           id: "championship",
           name: "Championship",
           country: "England",
-          teams: ["queens-park-rangers", "west-ham-united", "wolves"]//, "sheffield-united", "southampton", "swansea"]
+          teams: ["queens-park-rangers", "west-ham-united", "wolves", "sheffield-united", "southampton", "swansea"]
         },
         {
           id: "laliga-hypermotion",
@@ -269,6 +275,11 @@ window.SQUAD_MANIFEST = {
           id: "ballon-dor",
           name: "Ballon d'Or",
           teams: ["2026-ballon-dor-men", "2026-ballon-dor-women"]
+        },
+        {
+          id: "legacy",
+          name: "Legacy",
+          teams: ["atletico-madrid-2013-14", "atletico-madrid-2015-16", "barcelona-2014-15", "real-madrid-2017-18", "arsenal-2003-04"]
         }
       ]
     }

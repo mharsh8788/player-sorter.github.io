@@ -85,6 +85,7 @@ registerTeam({
     { id: "walsh", name: "Keira Walsh", number: 21, position: "MF", nation: "ENG" },
     { id: "matsukubo", name: "Manaka Matsukubo", number: 29, position: "MF", nation: "JPN" },
     { id: "potter", name: "Alexia Potter", number: 32, position: "MF", nation: "ENG" },
+    { id: "brown", name: "Lola Brown", number: 25, position: "MF", nation: "ENG" },
 
     { id: "ramirez", name: "Mayra Ramírez", number: 7, position: "FW", nation: "COL" },
     { id: "malard", name: "Melvine Malard", number: 9, position: "FW", nation: "FRA" },

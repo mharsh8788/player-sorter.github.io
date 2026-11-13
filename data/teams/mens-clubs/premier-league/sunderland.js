@@ -51,7 +51,7 @@ registerTeam({
       primary: "#112768",
       onPrimary: "#FFFFFF",
       accent: "#D98B4E",
-      onAccent: "#FFFFFF",
+      onAccent: "#10224F",
       header: "#112768",
       onHeader: "#FFFFFF",
       headerBand: "#D98B4E",
