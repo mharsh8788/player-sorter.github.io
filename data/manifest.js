@@ -18,7 +18,7 @@ window.SQUAD_MANIFEST = {
           id: "premier-league",
           name: "Premier League",
           country: "England",
-          teams: ["arsenal", "liverpool", "manchester-city", "manchester-united", "aston-villa", "chelsea", "tottenham", "newcastle", "fulham", "leeds", "everton", "bournemouth", "brighton", "ipswich-town", "nottingham-forest", "crystal-palace", "sunderland"]
+          teams: ["arsenal", "liverpool", "manchester-city", "manchester-united", "aston-villa", "chelsea", "tottenham", "newcastle", "fulham", "leeds", "everton", "bournemouth", "brighton", "ipswich-town", "nottingham-forest", "crystal-palace", "sunderland", "coventry-city", "hull-city", "brentford"]
         },
         {
           id: "bundesliga",
